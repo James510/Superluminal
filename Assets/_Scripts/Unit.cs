@@ -5,6 +5,7 @@ public class Unit : MonoBehaviour
 {
     public GameObject unitManager;
     public bool selected = false;
+    public int hp;
     public float floorOffset = 1;
     public float speed = 5.0f;
     public float stopDistanceOffset = 1;
@@ -22,8 +23,12 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (hp < 1)
+        {
+            Destroy(this.gameObject);
+        }
         //Debug.Log(selectedList);
-	    if(GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
+        if (GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
         {
             if(!selectedByClick)
             {
@@ -65,6 +70,11 @@ public class Unit : MonoBehaviour
         }
 
         UpdateMove();
+    }
+
+    public void Damage(int dmg)
+    {
+        hp -= dmg;
     }
 
     void SetDest(Vector3 dest)//Set destination as given by UnitManager
