@@ -57,15 +57,23 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DestroyTimer.cs" />
+    <Compile Include="Assets\BulletScript.cs" />
     <Compile Include="Assets\_Scripts\CameraOperator.cs" />
-    <Compile Include="Assets\_Scripts\CameraRTSScript.cs" />
+    <Compile Include="Assets\_Scripts\DestroyTimer.cs" />
     <Compile Include="Assets\_Scripts\MainCameraMover.cs" />
+    <Compile Include="Assets\_Scripts\MainCameraZoom.cs" />
+    <Compile Include="Assets\_Scripts\TurretScript.cs" />
     <Compile Include="Assets\_Scripts\Unit.cs" />
     <Compile Include="Assets\_Scripts\UnitManager.cs" />
   </ItemGroup>

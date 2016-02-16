@@ -1,32 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraRTSScript : MonoBehaviour
+public class MainCameraZoom : MonoBehaviour
 {
-
-
-    public float ScrollSpeed = 15;
-
-    public float ScrollEdge = 0.1f;
-
-    public float PanSpeed = 10;
-
     public Vector2 zoomRange = new Vector2(-10, 100);
-
     public float CurrentZoom = 0;
-        
     public float ZoomZpeed = 1;
-
     public float ZoomRotation = 1;
-
     public Vector2 zoomAngleRange = new Vector2(20, 70);
-
     public float rotateSpeed = 10;
-
     private Vector3 initialPosition;
-
     private Vector3 initialRotation;
-
 
     void Start()
     {
@@ -43,8 +27,6 @@ public class CameraRTSScript : MonoBehaviour
             transform.Translate(Vector3.right * Time.deltaTime * PanSpeed * (Input.mousePosition.x - Screen.width * 0.5f) / (Screen.width * 0.5f), Space.World);
             transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed * (Input.mousePosition.y - Screen.height * 0.5f) / (Screen.height * 0.5f), Space.World);
         }*/
-
-        
 
         // zoom in/out
         CurrentZoom -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomZpeed;

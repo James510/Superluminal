@@ -8,7 +8,7 @@ public class CameraOperator : MonoBehaviour
     public static Rect selection = new Rect(0, 0, 0, 0);
     private Vector3 startClick = -Vector3.one;
     private static Vector3 moveToDestination = Vector3.zero;
-    private static List<string> passables = new List<string>() { "Floor" };
+    private static List<string> passables = new List<string>() { "Floor" };//Will pass through any objects not labeled "Floor"
 	// Update is called once per frame
 	void Update ()
     {
@@ -17,12 +17,12 @@ public class CameraOperator : MonoBehaviour
 	}
     void CheckCamera()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))//Set initial position
             startClick = Input.mousePosition;
-        else if(Input.GetMouseButtonUp(0)) 
+        else if(Input.GetMouseButtonUp(0))//Reset initial position
             startClick = -Vector3.one;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) //When mouse down, set and draw rectangle
         {
 
             if (selection.width < 0)
@@ -39,25 +39,28 @@ public class CameraOperator : MonoBehaviour
 
         }
     }
+
     public static float InvertMouseY(float y)
     {
         return Screen.height - y;
     }
+
     void OnGUI()
     {
-        if(startClick != -Vector3.one)
+        if(startClick != -Vector3.one)//Draw the rectangle on the GUI
         {
             GUI.color = new Color(1, 1, 1, 0.5f);
             GUI.DrawTexture(selection, selectionHighlight);
         }
     }
+
     void Cleanup()
     {
         if (!Input.GetMouseButtonUp(1))
             moveToDestination = Vector3.zero;
     }
 
-    public static Vector3 GetDestination()
+    public static Vector3 GetDestination()//Calculates box area by raycast
     {
         if(moveToDestination == Vector3.zero)
         {

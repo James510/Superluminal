@@ -15,13 +15,13 @@ public class UnitManager : MonoBehaviour
         selectedUnits.Clear();
     }
 
-    void Update()
+    void Update() //Move click effect
     {
         if(Input.GetMouseButtonDown(1))
             Instantiate(moveEffectObject, CameraOperator.GetDestination(), moveEffectObject.transform.rotation);
     }
 
-    public void DestOffset()
+    public void DestOffset() //Formation movement
     {
         Vector3 destination = CameraOperator.GetDestination();
         
