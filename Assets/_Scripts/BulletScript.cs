@@ -10,7 +10,7 @@ public class BulletScript : MonoBehaviour
 
     void Start ()
     {
-        Destroy(this.gameObject, 5.0f);
+        Destroy(this.gameObject, 2.0f);
 	}
 
     void OnTriggerEnter(Collider other)

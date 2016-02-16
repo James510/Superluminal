@@ -11,38 +11,39 @@ public class TurretScript : MonoBehaviour
     public bool isEnemy = false;
     public float bulletScale=1.0f;
     private float nextFire;
+    private bool hasTarget;
+    private GameObject target;
 
     void Start()
     {
         nextFire = Time.time;
     }
 
-    void OnTriggerStay(Collider other)
+    void Update()
+    {
+
+    }
+
+    void OnTriggerStay(Collider other) //The old method of tracking
     {
         //Debug.Log("Hit");
-        if(other.gameObject.CompareTag("Enemy")&&!isEnemy)//Detect, track and fire at enemy
+        /*
+        if ((other.gameObject.CompareTag("Enemy") && !isEnemy) || (other.gameObject.CompareTag("Friend") && isEnemy))//Detect, track and fire at enemy
         {
             //Debug.Log("Detected");
-            Vector3 targetPos = other.gameObject.transform.position - transform.position;
-            Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
-            transform.rotation = rot;
-            //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
-            if (Time.time > nextFire)
+            if (!hasTarget)//There is something in here that causes tremendous lag whenever a ship aquires a target.
             {
-                GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
-
-                Rigidbody srb = shot.GetComponent<Rigidbody>();
-                srb.velocity = transform.parent.GetComponent<Rigidbody>().velocity;
-                srb.AddRelativeForce(Vector3.forward * 6000);
-                shot.GetComponent<BulletScript>().damage = damage;
-                shot.GetComponent<BulletScript>().isEnemy = false;
-                shot.transform.localScale += new Vector3(bulletScale, bulletScale, bulletScale*10);
-                nextFire = Time.time + fireRate; //Determines fire rate
+                hasTarget = true;
+                target = other.gameObject;
+            }
+            if (hasTarget && target == null)
+            {
+                hasTarget = false;
             }
         }
-        else if (other.gameObject.CompareTag("Friend")&&isEnemy)
+        if (hasTarget)
         {
-            Vector3 targetPos = other.gameObject.transform.position - transform.position;
+            Vector3 targetPos = target.transform.position - transform.position;
             Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
             transform.rotation = rot;
             //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
@@ -54,10 +55,14 @@ public class TurretScript : MonoBehaviour
                 srb.velocity = transform.parent.GetComponent<Rigidbody>().velocity;
                 srb.AddRelativeForce(Vector3.forward * 6000);
                 shot.GetComponent<BulletScript>().damage = damage;
-                shot.GetComponent<BulletScript>().isEnemy = true;
+                if (other.gameObject.CompareTag("Friend") && isEnemy)
+                    shot.GetComponent<BulletScript>().isEnemy = true;
+                else
+                    shot.GetComponent<BulletScript>().isEnemy = false;
                 shot.transform.localScale += new Vector3(bulletScale, bulletScale, bulletScale * 10);
                 nextFire = Time.time + fireRate; //Determines fire rate
             }
         }
+        */
     }
 }
