@@ -28,20 +28,20 @@ public class MainCameraMover : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") && !Input.GetKey("a"))
         {
             transform.Translate(Vector3.right * Time.deltaTime * PanSpeed, Space.Self);
         }
-        else if (Input.GetKey("a"))
+        else if (Input.GetKey("a") && !Input.GetKey("d"))
         {
             transform.Translate(Vector3.right * Time.deltaTime * -PanSpeed, Space.Self);
         }
 
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
+        if (Input.GetKey("w") && !Input.GetKey("s"))// || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed, Space.Self);
         }
-        else if (Input.GetKey("s") || Input.mousePosition.y <= Screen.height * ScrollEdge)
+        else if (Input.GetKey("s") && !Input.GetKey("w"))// || Input.mousePosition.y <= Screen.height * ScrollEdge
         {
             transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.Self);
         }
