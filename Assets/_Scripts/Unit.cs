@@ -11,13 +11,12 @@ public class Unit : MonoBehaviour
     public float stopDistanceOffset = 1;
     public float rotSpeed;
     private Vector3 moveToDest = Vector3.zero;
-    private Rigidbody rb;
     private bool selectedByClick=false;
     private bool selectedList = false;
 
 	void Start ()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -94,7 +93,7 @@ public class Unit : MonoBehaviour
             Vector3 newDir = Vector3.RotateTowards(transform.forward, toTarget, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
             float dist = Vector3.Distance(moveToDest, transform.position);
-            rb.velocity = transform.forward * speed;
+            transform.Translate(Vector3.forward * speed);
 
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop
             {
@@ -104,7 +103,7 @@ public class Unit : MonoBehaviour
         }
         else //Stop
         {
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
         }
     }
 
