@@ -44,32 +44,7 @@ public class CameraRTSScript : MonoBehaviour
             transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed * (Input.mousePosition.y - Screen.height * 0.5f) / (Screen.height * 0.5f), Space.World);
         }*/
 
-        if (Input.GetKey("d"))
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * PanSpeed, Space.Self);
-        }
-        else if (Input.GetKey("a"))
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * -PanSpeed, Space.Self);
-        }
-
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed, Space.Self);
-        }
-        else if (Input.GetKey("s") || Input.mousePosition.y <= Screen.height * ScrollEdge)
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.Self);
-        }
-
-        if (Input.GetKey("q") || Input.mousePosition.x <= Screen.width * ScrollEdge)
-        {
-            transform.Rotate(Vector3.up * Time.deltaTime * -rotateSpeed, Space.World);
-        }
-        else if (Input.GetKey("e") || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge))
-        {
-            transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed, Space.World);
-        }
+        
 
         // zoom in/out
         CurrentZoom -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomZpeed;

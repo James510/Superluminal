@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
+    public GameObject unitManager;
     public bool selected = false;
     public float floorOffset = 1;
     public float speed = 5.0f;
@@ -11,6 +12,7 @@ public class Unit : MonoBehaviour
     private Vector3 moveToDest = Vector3.zero;
     private Rigidbody rb;
     private bool selectedByClick=false;
+    private bool selectedList = false;
 
 	void Start ()
     {
@@ -20,6 +22,7 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        //Debug.Log(selectedList);
 	    if(GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0))
         {
             if(!selectedByClick)
@@ -29,23 +32,44 @@ public class Unit : MonoBehaviour
                 selected = CameraOperator.selection.Contains(camPos);
             }
             if (selected)
+            {
                 GetComponent<Renderer>().material.color = Color.red;
+                if(selectedList==false)
+                {
+                    unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
+                    selectedList = true;
+                }
+                
+            }
             else
+            {
+                if (selectedList == true)
+                {
+                    unitManager.GetComponent<UnitManager>().DeselectAllUnits();
+                    selectedList = false;
+                }
                 GetComponent<Renderer>().material.color = Color.white;
+            }
         }
         if (selected && Input.GetMouseButtonUp(1))
         {
-            Vector3 destination = CameraOperator.GetDestination();
+            unitManager.GetComponent<UnitManager>().DestOffset();
+            //Vector3 destination = CameraOperator.GetDestination();
 
-            if(destination != Vector3.zero)
+            /*if(destination != Vector3.zero)
             {
                 //gameObject.GetComponent<NavMeshAgent>().SetDestination(destination); //Unity Pro
-                moveToDest = destination;
-                moveToDest.y += floorOffset;
-            }
+               // moveToDest = destination;
+                //moveToDest.y += floorOffset;
+            }*/
         }
 
         UpdateMove();
+    }
+
+    void SetDest(Vector3 dest)
+    {
+        moveToDest = dest;
     }
     void UpdateMove()
     {
@@ -63,7 +87,11 @@ public class Unit : MonoBehaviour
             rb.velocity = transform.forward * speed;
 
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset)
+            {
                 moveToDest = Vector3.zero;
+
+            }
+                
         }
         else
         {
@@ -75,6 +103,8 @@ public class Unit : MonoBehaviour
     {
         selectedByClick = true;
         selected = true;
+        //unitManager.GetComponent<UnitManager>().SelectSingleUnit(this.gameObject);
+        
     }
     void OnMouseUp()
     {
