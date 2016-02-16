@@ -68,9 +68,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BulletScript.cs" />
+    <Compile Include="Assets\_Scripts\BulletScript.cs" />
     <Compile Include="Assets\_Scripts\CameraOperator.cs" />
     <Compile Include="Assets\_Scripts\DestroyTimer.cs" />
+    <Compile Include="Assets\_Scripts\EnemyUnit.cs" />
     <Compile Include="Assets\_Scripts\MainCameraMover.cs" />
     <Compile Include="Assets\_Scripts\MainCameraZoom.cs" />
     <Compile Include="Assets\_Scripts\TurretScript.cs" />
