@@ -23,7 +23,7 @@ public class Unit : MonoBehaviour
 	void Update ()
     {
         //Debug.Log(selectedList);
-	    if(GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0))
+	    if(GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
         {
             if(!selectedByClick)
             {
@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour
             }
             else
             {
-                if (selectedList == true)
+                if (selectedList == true)//Deselect units
                 {
                     unitManager.GetComponent<UnitManager>().DeselectAllUnits();
                     selectedList = false;
@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
                 GetComponent<Renderer>().material.color = Color.white;
             }
         }
-        if (selected && Input.GetMouseButtonUp(1))
+        if (selected && Input.GetMouseButtonUp(1))//Move script
         {
             unitManager.GetComponent<UnitManager>().DestOffset();
             //Vector3 destination = CameraOperator.GetDestination();
@@ -67,13 +67,13 @@ public class Unit : MonoBehaviour
         UpdateMove();
     }
 
-    void SetDest(Vector3 dest)
+    void SetDest(Vector3 dest)//Set destination as given by UnitManager
     {
         moveToDest = dest;
     }
     void UpdateMove()
     {
-        if(moveToDest != Vector3.zero && transform.position != moveToDest)
+        if(moveToDest != Vector3.zero && transform.position != moveToDest) //Move to target
         {
             /*Vector3 direction = (moveToDest - transform.position).normalized;
             direction.y = 0;
@@ -86,20 +86,19 @@ public class Unit : MonoBehaviour
             float dist = Vector3.Distance(moveToDest, transform.position);
             rb.velocity = transform.forward * speed;
 
-            if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset)
+            if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop
             {
                 moveToDest = Vector3.zero;
-
             }
                 
         }
-        else
+        else //Stop
         {
             rb.velocity = Vector3.zero;
         }
     }
 
-    void OnMouseDown()
+    void OnMouseDown() //Click selection
     {
         selectedByClick = true;
         selected = true;
