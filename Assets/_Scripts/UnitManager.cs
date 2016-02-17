@@ -77,7 +77,9 @@ public class UnitManager : MonoBehaviour
 
     public void SelectAdditionalUnit(GameObject unit)
     {
+
         selectedUnits.Add(unit);
+        
     }
 
     public void DeselectAllUnits()

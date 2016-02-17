@@ -13,11 +13,12 @@ public class Unit : MonoBehaviour
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
-
+    public GameObject selectionCircle;
 	void Start ()
     {
         //rb = GetComponent<Rigidbody>();
-	}
+        selectionCircle.GetComponent<SpriteRenderer>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -38,9 +39,11 @@ public class Unit : MonoBehaviour
             if (selected)
             {
                 GetComponent<Renderer>().material.color = Color.red;
+
                 if(selectedList==false)
                 {
                     unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
+                    selectionCircle.GetComponent<SpriteRenderer>().enabled = true;
                     selectedList = true;
                 }
                 
@@ -50,6 +53,7 @@ public class Unit : MonoBehaviour
                 if (selectedList == true)//Deselect units
                 {
                     unitManager.GetComponent<UnitManager>().DeselectAllUnits();
+                    selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
                     selectedList = false;
                 }
                 GetComponent<Renderer>().material.color = Color.white;
@@ -82,7 +86,8 @@ public class Unit : MonoBehaviour
     }
     void UpdateMove()
     {
-        if(moveToDest != Vector3.zero && transform.position != moveToDest) //Move to target
+        transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z); // clamp the y vector
+        if (moveToDest != Vector3.zero && transform.position != moveToDest) //Move to target
         {
             /*Vector3 direction = (moveToDest - transform.position).normalized;
             direction.y = 0;
@@ -94,7 +99,7 @@ public class Unit : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
             float dist = Vector3.Distance(moveToDest, transform.position);
             transform.Translate(Vector3.forward * speed);
-
+            
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop
             {
                 moveToDest = Vector3.zero;
