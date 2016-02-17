@@ -10,18 +10,31 @@ public class TurretScript : MonoBehaviour
     public int damage;
     public bool isEnemy = false;
     public float bulletScale=1.0f;
+    
     private float nextFire;
     private bool hasTarget;
     private GameObject target;
+    private Light flash;
 
     void Start()
     {
         nextFire = Time.time;
+        flash = GetComponent<Light>();
     }
 
     void Update()
     {
-
+        if (Time.time > nextFire)
+        {
+            //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
+            GetComponent<ParticleSystem>().Emit(1);
+            flash.enabled = true;
+            nextFire = Time.time + fireRate; //Determines fire rate
+        }
+        else
+        {
+            flash.enabled = false;
+        }
     }
 
     void OnTriggerStay(Collider other) //The old method of tracking

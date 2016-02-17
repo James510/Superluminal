@@ -12,7 +12,11 @@ public class BulletScript : MonoBehaviour
     {
         Destroy(this.gameObject, 2.0f);
 	}
+    void Update()
+    {
+        transform.Translate(Vector3.forward * 3);
 
+    }
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Enemy") && !isEnemy)
