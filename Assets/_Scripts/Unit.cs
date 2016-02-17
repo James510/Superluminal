@@ -13,13 +13,22 @@ public class Unit : MonoBehaviour
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
-
-	void Start ()
-    {
-        //rb = GetComponent<Rigidbody>();
-	}
+    private GameObject[] targets;
 	
 	// Update is called once per frame
+    void Start()
+    {
+        StartCoroutine("TargetAquisition",Random.Range(0.1f,0.5f));
+    }
+
+    IEnumerator TargetAquisition(float offset)
+    {
+        targets = GameObject.FindGameObjectsWithTag("Enemy"); //Easy fix for target aquisition
+        Debug.Log(targets.Length);
+        yield return new WaitForSeconds(2.0f+offset);
+        StartCoroutine("TargetAquisition", offset);
+    }
+
 	void Update ()
     {
         if (hp < 1)
@@ -69,6 +78,12 @@ public class Unit : MonoBehaviour
         }
 
         UpdateMove();
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        //Debug.Log("Hit");
+        //other.GetComponent<ParticleSystem>();
     }
 
     public void Damage(int dmg)

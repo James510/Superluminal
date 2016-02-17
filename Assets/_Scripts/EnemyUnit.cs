@@ -18,6 +18,7 @@ public class EnemyUnit : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
 	}
 
     public void Damage(int dmg)
