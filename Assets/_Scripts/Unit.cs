@@ -14,11 +14,13 @@ public class Unit : MonoBehaviour
     private bool selectedByClick=false;
     private bool selectedList = false;
     private GameObject[] targets;
+    public GameObject selectionCircle;
 	
 	// Update is called once per frame
     void Start()
     {
         StartCoroutine("TargetAquisition",Random.Range(0.1f,0.5f));
+       // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     IEnumerator TargetAquisition(float offset)
@@ -50,6 +52,7 @@ public class Unit : MonoBehaviour
                 if(selectedList==false)
                 {
                     unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
+                    selectionCircle.GetComponent<SpriteRenderer>().enabled = true;
                     selectedList = true;
                 }
                 
@@ -59,6 +62,7 @@ public class Unit : MonoBehaviour
                 if (selectedList == true)//Deselect units
                 {
                     unitManager.GetComponent<UnitManager>().DeselectAllUnits();
+                    selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
                     selectedList = false;
                 }
                 GetComponent<Renderer>().material.color = Color.white;
@@ -109,7 +113,7 @@ public class Unit : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
             float dist = Vector3.Distance(moveToDest, transform.position);
             transform.Translate(Vector3.forward * speed);
-
+            transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z); // locks the z axis. will be changed in the future
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop
             {
                 moveToDest = Vector3.zero;
