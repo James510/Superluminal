@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     IEnumerator TargetAquisition(float offset)
     {
         targets = GameObject.FindGameObjectsWithTag("Enemy"); //Easy fix for target aquisition
-        Debug.Log(targets.Length);
+        //Debug.Log(targets.Length);
         yield return new WaitForSeconds(2.0f+offset);
         StartCoroutine("TargetAquisition", offset);
     }
