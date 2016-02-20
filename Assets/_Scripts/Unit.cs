@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     public GameObject selectionCircle;
     public GameObject[] enemies;
     public GameObject unitManager;
+    public GameObject explosionFX;
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
@@ -122,6 +123,7 @@ public class Unit : MonoBehaviour
     {
         //Debug.Log("Hit");
         hp -= other.GetComponent<TurretScript>().damage;
+        Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
     }
 
     void SetDest(Vector3 dest)//Set destination as given by UnitManager
