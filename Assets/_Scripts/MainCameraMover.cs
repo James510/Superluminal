@@ -4,6 +4,7 @@ using System.Collections;
 public class MainCameraMover : MonoBehaviour
 {
     public float ScrollSpeed = 15;
+    public float rotateSpeed = 15;
     public float ScrollEdge = 0.1f;
     public float PanSpeed = 10;
     private Vector3 initialPosition;
@@ -18,13 +19,13 @@ public class MainCameraMover : MonoBehaviour
         else if (Input.GetKey("s") && !Input.GetKey("w"))// || Input.mousePosition.y <= Screen.height * ScrollEdge
             transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.Self);
 
-        /*if (Input.GetKey("q") || Input.mousePosition.x <= Screen.width * ScrollEdge) //Rotate when at edge
+        if (Input.GetKey("q")) // || Input.mousePosition.x <= Screen.width * ScrollEdge
         {
             transform.Rotate(Vector3.up * Time.deltaTime * -rotateSpeed, Space.World);
         }
-        else if (Input.GetKey("e") || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge))
+        else if (Input.GetKey("e"))// || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge)
         {
             transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed, Space.World);
-        }*/
+        }
     }
 }

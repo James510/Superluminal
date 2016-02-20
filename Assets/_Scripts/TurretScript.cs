@@ -19,6 +19,8 @@ public class TurretScript : MonoBehaviour
     {
         nextFire = Time.time;
         flash = GetComponent<Light>();
+        GetComponent<ParticleSystem>().startSize = bulletScale;
+        //GetComponent<ParticleSystem>().shape = inaccuracy;
     }
 
     void Update()
