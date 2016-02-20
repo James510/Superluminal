@@ -70,10 +70,12 @@
   <ItemGroup>
     <Compile Include="Assets\_Scripts\BulletScript.cs" />
     <Compile Include="Assets\_Scripts\CameraOperator.cs" />
+    <Compile Include="Assets\_Scripts\CameraRTSScript.cs" />
     <Compile Include="Assets\_Scripts\DestroyTimer.cs" />
     <Compile Include="Assets\_Scripts\EnemyUnit.cs" />
     <Compile Include="Assets\_Scripts\MainCameraMover.cs" />
     <Compile Include="Assets\_Scripts\MainCameraZoom.cs" />
+    <Compile Include="Assets\_Scripts\RotationLock.cs" />
     <Compile Include="Assets\_Scripts\TurretScript.cs" />
     <Compile Include="Assets\_Scripts\Unit.cs" />
     <Compile Include="Assets\_Scripts\UnitManager.cs" />

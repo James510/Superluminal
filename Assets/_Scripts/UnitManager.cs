@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class UnitManager : MonoBehaviour
 {
     public List<GameObject> selectedUnits;
+    public GameObject[] enemies;
+    public GameObject[] friends;
     //public List<List<GameObject>> unitList;
     public GameObject moveEffectObject;
 
@@ -12,20 +15,41 @@ public class UnitManager : MonoBehaviour
     void Start()
     {
         //May have to initialize list
+        StartCoroutine("UnitList");
         selectedUnits.Clear();
+    }
+
+    IEnumerator UnitList()
+    {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        friends = GameObject.FindGameObjectsWithTag("Friend");
+        for (int x = 0; x < friends.Length; x++)
+            friends[x].SendMessage("EnemyList", enemies);
+        for (int x = 0; x < enemies.Length; x++)
+            enemies[x].SendMessage("EnemyList", friends);
+        //Debug.Log(targets.Length);
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine("UnitList");
     }
 
     void Update() //Move click effect
     {
         if(Input.GetMouseButtonDown(1))
             Instantiate(moveEffectObject, CameraOperator.GetDestination(), moveEffectObject.transform.rotation);
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        friends = GameObject.FindGameObjectsWithTag("Friend");
+        for (int x = 0; x < friends.Length; x++)
+            friends[x].SendMessage("EnemyList", enemies);
+        for (int x = 0; x < enemies.Length; x++)
+            enemies[x].SendMessage("EnemyList", friends);
+        //Debug.Log(targets.Length);
+
     }
 
     public void DestOffset() //Formation movement
     {
         Vector3 destination = CameraOperator.GetDestination();
         
-        int y = 0;
         float averageX=0,averageZ=0;
         for (int x = 0; x < selectedUnits.Count; x++)
         {

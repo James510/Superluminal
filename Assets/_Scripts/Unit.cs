@@ -3,32 +3,66 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
-    public GameObject unitManager;
     public bool selected = false;
     public int hp;
     public float floorOffset = 1;
     public float speed = 5.0f;
     public float stopDistanceOffset = 1;
     public float rotSpeed;
+    public bool hasMainCannon = false;
+    public float maxDistance=1000;
+    public GameObject[] turrets;
+    public GameObject selectionCircle;
+    public GameObject[] enemies;
+    public GameObject unitManager;
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
-    private GameObject[] targets;
-    public GameObject selectionCircle;
+    private bool hasTarget = false;
+    private GameObject target;
 	
 	// Update is called once per frame
     void Start()
     {
-        StartCoroutine("TargetAquisition",Random.Range(0.1f,0.5f));
-       // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine("TargetAquisition",Random.Range(0.5f,0.8f));
+        // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
+        //GetComponent<ParticleSystem>().Emit(1); //Fire Main Cannon
     }
 
     IEnumerator TargetAquisition(float offset)
     {
-        targets = GameObject.FindGameObjectsWithTag("Enemy"); //Easy fix for target aquisition
-        //Debug.Log(targets.Length);
+        if(enemies.Length>0)
+        {
+            if (!hasTarget)
+            {
+                target = enemies[0];
+                for (int x = 0; x < enemies.Length; x++)
+                {
+                    if (Vector3.Distance(transform.position, enemies[x].transform.position) < Vector3.Distance(transform.position, target.transform.position))
+                        target = enemies[x];
+                }
+                if (Vector3.Distance(transform.position, target.transform.position) < maxDistance)
+                {
+                    hasTarget = true;
+                    for (int y = 0; y < turrets.Length; y++)
+                        turrets[y].SendMessage("SetTarget", target);
+                }
+
+            }
+            if (hasTarget && target == null)
+            {
+                hasTarget = false;
+            }
+
+        }
         yield return new WaitForSeconds(2.0f+offset);
         StartCoroutine("TargetAquisition", offset);
+    }
+
+
+    void EnemyList (GameObject[] list)
+    {
+        enemies = list;
     }
 
 	void Update ()
@@ -87,12 +121,7 @@ public class Unit : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         //Debug.Log("Hit");
-        //other.GetComponent<ParticleSystem>();
-    }
-
-    public void Damage(int dmg)
-    {
-        hp -= dmg;
+        hp -= other.GetComponent<TurretScript>().damage;
     }
 
     void SetDest(Vector3 dest)//Set destination as given by UnitManager
