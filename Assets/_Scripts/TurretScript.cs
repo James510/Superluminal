@@ -10,7 +10,6 @@ public class TurretScript : MonoBehaviour
     public int damage;
     public bool isEnemy = false;
     public float bulletScale=1.0f;
-    
     private float nextFire;
     private bool hasTarget;
     private GameObject target;
@@ -24,23 +23,40 @@ public class TurretScript : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > nextFire)
+        if (hasTarget&&target!=null)
         {
-            //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
-            GetComponent<ParticleSystem>().Emit(1);
-            flash.enabled = true;
-            nextFire = Time.time + fireRate; //Determines fire rate
+            Vector3 targetPos = target.transform.position - transform.position;
+            Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
+            transform.rotation = rot;
+            //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
+            if (Time.time > nextFire)
+            {
+                //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
+                GetComponent<ParticleSystem>().Emit(1);
+                flash.enabled = true;
+                nextFire = Time.time + fireRate; //Determines fire rate
+            }
+            else
+            {
+                flash.enabled = false;
+            }
         }
         else
         {
-            flash.enabled = false;
+            hasTarget = false;
         }
     }
 
+    void SetTarget(GameObject tgt)
+    {
+        target = tgt;
+        hasTarget = true;
+    }
+    /*
     void OnTriggerStay(Collider other) //The old method of tracking
     {
         //Debug.Log("Hit");
-        /*
+        
         if ((other.gameObject.CompareTag("Enemy") && !isEnemy) || (other.gameObject.CompareTag("Friend") && isEnemy))//Detect, track and fire at enemy
         {
             //Debug.Log("Detected");
@@ -76,6 +92,6 @@ public class TurretScript : MonoBehaviour
                 nextFire = Time.time + fireRate; //Determines fire rate
             }
         }
-        */
     }
+    */
 }
