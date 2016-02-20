@@ -33,8 +33,8 @@ public class Unit : MonoBehaviour
     {
         if(enemies.Length>0)
         {
-            if (!hasTarget)
-            {
+            //if (!hasTarget)
+            //{
                 target = enemies[0];
                 for (int x = 0; x < enemies.Length; x++)
                 {
@@ -48,7 +48,7 @@ public class Unit : MonoBehaviour
                         turrets[y].SendMessage("SetTarget", target);
                 }
 
-            }
+            //}
             if (hasTarget && target == null)
             {
                 hasTarget = false;
@@ -142,7 +142,7 @@ public class Unit : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
             float dist = Vector3.Distance(moveToDest, transform.position);
             transform.Translate(Vector3.forward * speed);
-            transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z); // locks the z axis. will be changed in the future
+            //transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z); // locks the z axis. will be changed in the future
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop
             {
                 moveToDest = Vector3.zero;
