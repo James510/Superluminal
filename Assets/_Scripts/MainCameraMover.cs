@@ -3,8 +3,8 @@ using System.Collections;
 
 public class MainCameraMover : MonoBehaviour
 {
-    public float ScrollSpeed = 15;
-    public float rotateSpeed = 15;
+    public float ScrollSpeed = 50;
+    public float rotateSpeed = 50;
     public float ScrollEdge = 0.1f;
     public float PanSpeed = 10;
     private Vector3 initialPosition;

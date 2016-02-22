@@ -11,7 +11,6 @@ public class UnitManager : MonoBehaviour
     //public List<List<GameObject>> unitList;
     public GameObject moveEffectObject;
 
-    // Use this for initialization
     void Start()
     {
         //May have to initialize list
@@ -32,9 +31,9 @@ public class UnitManager : MonoBehaviour
         StartCoroutine("UnitList");
     }
 
-    void Update() //Move click effect
+    void Update() 
     {
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1)) //Move click effect
             Instantiate(moveEffectObject, CameraOperator.GetDestination(), moveEffectObject.transform.rotation);
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         friends = GameObject.FindGameObjectsWithTag("Friend");
