@@ -16,26 +16,35 @@ public class Unit : MonoBehaviour
     public GameObject[] enemies;
     public GameObject unitManager;
     public GameObject explosionFX;
+    public GameObject deathExplosionFX;
+    public bool isEnemy;
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
     private bool hasTarget = false;
+    private bool isAlive = true;
     private GameObject target;
 	
 	// Update is called once per frame
     void Start()
     {
-        StartCoroutine("TargetAquisition",Random.Range(0.5f,0.8f));
+        StartCoroutine("TargetAquisition",Random.Range(0.1f,0.8f));
         // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
         //GetComponent<ParticleSystem>().Emit(1); //Fire Main Cannon
+        if (isEnemy)
+        {
+            this.transform.tag = "Enemy";
+        }
     }
 
     IEnumerator TargetAquisition(float offset)
     {
-        if(enemies.Length>0)
+        if(isAlive)
         {
-            //if (!hasTarget)
-            //{
+            if (enemies.Length > 0)
+            {
+                //if (!hasTarget)
+                //{
                 target = enemies[0];
                 for (int x = 0; x < enemies.Length; x++)
                 {
@@ -49,15 +58,17 @@ public class Unit : MonoBehaviour
                         turrets[y].SendMessage("SetTarget", target);
                 }
 
-            //}
-            if (hasTarget && target == null)
-            {
-                hasTarget = false;
+                //}
+                if (hasTarget && target == null)
+                {
+                    hasTarget = false;
+                }
+
             }
+            yield return new WaitForSeconds(2.0f + offset);
+            StartCoroutine("TargetAquisition", offset);
 
         }
-        yield return new WaitForSeconds(2.0f+offset);
-        StartCoroutine("TargetAquisition", offset);
     }
 
 
@@ -68,62 +79,79 @@ public class Unit : MonoBehaviour
 
 	void Update ()
     {
-        if (hp < 1)
+        if(isAlive)
         {
-            Destroy(this.gameObject);
-        }
-        //Debug.Log(selectedList);
-        if (GetComponent<Renderer>().isVisible&&Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
-        {
-            if(!selectedByClick)
+            if (hp < 1)
             {
-                Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
-                camPos.y = CameraOperator.InvertMouseY(camPos.y);
-                selected = CameraOperator.selection.Contains(camPos);
-            }
-            if (selected)
-            {
-                GetComponent<Renderer>().material.color = Color.red;
-                if(selectedList==false)
+                Instantiate(deathExplosionFX, transform.position, transform.rotation);
+                foreach (Transform child in transform)
                 {
-                    unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
-                    selectionCircle.GetComponent<SpriteRenderer>().enabled = true;
-                    selectedList = true;
+                    child.SendMessage("Deactivate");
                 }
-                
+                transform.DetachChildren();
+                isAlive = false;
+                Destroy(this.gameObject);
             }
-            else
+            //Debug.Log(selectedList);
+            if (GetComponent<Renderer>().isVisible && Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
             {
-                if (selectedList == true)//Deselect units
+                if (!selectedByClick)
                 {
-                    unitManager.GetComponent<UnitManager>().DeselectAllUnits();
-                    selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
-                    selectedList = false;
+                    Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
+                    camPos.y = CameraOperator.InvertMouseY(camPos.y);
+                    selected = CameraOperator.selection.Contains(camPos);
                 }
-                GetComponent<Renderer>().material.color = Color.white;
+                if (selected)
+                {
+                    GetComponent<Renderer>().material.color = Color.red;
+                    if (selectedList == false)
+                    {
+                        unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
+                        selectionCircle.GetComponent<SpriteRenderer>().enabled = true;
+                        selectedList = true;
+                    }
+
+                }
+                else
+                {
+                    if (selectedList == true)//Deselect units
+                    {
+                        unitManager.GetComponent<UnitManager>().DeselectAllUnits();
+                        selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
+                        selectedList = false;
+                    }
+                    GetComponent<Renderer>().material.color = Color.white;
+                }
+            }
+            if (selected && Input.GetMouseButtonUp(1))//Move script
+            {
+                unitManager.GetComponent<UnitManager>().DestOffset();
+                //Vector3 destination = CameraOperator.GetDestination();
+
+                /*if(destination != Vector3.zero)
+                {
+                    //gameObject.GetComponent<NavMeshAgent>().SetDestination(destination); //Unity Pro
+                   // moveToDest = destination;
+                    //moveToDest.y += floorOffset;
+                }*/
+            }
+
+            UpdateMove();
+            if (hasTarget && target == null)
+            {
+                hasTarget = false;
             }
         }
-        if (selected && Input.GetMouseButtonUp(1))//Move script
-        {
-            unitManager.GetComponent<UnitManager>().DestOffset();
-            //Vector3 destination = CameraOperator.GetDestination();
-
-            /*if(destination != Vector3.zero)
-            {
-                //gameObject.GetComponent<NavMeshAgent>().SetDestination(destination); //Unity Pro
-               // moveToDest = destination;
-                //moveToDest.y += floorOffset;
-            }*/
-        }
-
-        UpdateMove();
     }
 
     void OnParticleCollision(GameObject other)
     {
-        //Debug.Log("Hit");
-        hp -= other.GetComponent<TurretScript>().damage;
-        Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
+        if(isAlive)
+        {
+            //Debug.Log("Hit");
+            hp -= other.GetComponent<TurretScript>().damage;
+            Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
+        }
     }
 
     void SetDest(Vector3 dest)//Set destination as given by UnitManager
