@@ -14,6 +14,8 @@ public class TurretScript : MonoBehaviour
     private bool hasTarget;
     private GameObject target;
     private Light flash;
+    private bool isAlive = true;
+    private float randX, randY, randZ;
 
     void Start()
     {
@@ -25,27 +27,46 @@ public class TurretScript : MonoBehaviour
 
     void Update()
     {
-        if (hasTarget&&target!=null)
+        if(isAlive)
         {
-            Vector3 targetPos = target.transform.position - transform.position;
-            Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
-            transform.rotation = rot;
-            //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
-            if (Time.time > nextFire)
+            if (hasTarget && target != null)
             {
-                //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
-                GetComponent<ParticleSystem>().Emit(1);
-                flash.enabled = true;
-                nextFire = Time.time + fireRate; //Determines fire rate
+                Vector3 targetPos = target.transform.position - transform.position;
+                Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
+                transform.rotation = rot;
+                //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
+                if (Time.time > nextFire)
+                {
+                    //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
+                    GetComponent<ParticleSystem>().Emit(1);
+                    flash.enabled = true;
+                    nextFire = Time.time + fireRate; //Determines fire rate
+                }
+                else
+                {
+                    flash.enabled = false;
+                }
             }
             else
             {
-                flash.enabled = false;
+                hasTarget = false;
             }
         }
         else
         {
-            hasTarget = false;
+            transform.position = new Vector3(transform.position.x + randX, transform.position.y + randY, transform.position.z + randZ);
+            if (randX > 0)
+                randX -= 0.0001f;
+            else if (randX < 0)
+                randX += 0.0001f;
+            if (randY > 0)
+                randY -= 0.0001f;
+            else if (randY < 0)
+                randY += 0.0001f;
+            if (randZ > 0)
+                randZ -= 0.0001f;
+            else if (randZ < 0)
+                randZ += 0.0001f;
         }
     }
 
@@ -53,6 +74,16 @@ public class TurretScript : MonoBehaviour
     {
         target = tgt;
         hasTarget = true;
+    }
+
+    void Deactivate()
+    {
+        isAlive = false;
+        transform.rotation = Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f));
+        randX = Random.Range(-0.05f, 0.05f);
+        randY = Random.Range(-0.05f, 0.05f);
+        randZ = Random.Range(-0.05f, 0.05f);
+        Destroy(this.gameObject, 30.0f);
     }
     /*
     void OnTriggerStay(Collider other) //The old method of tracking
