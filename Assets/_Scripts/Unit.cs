@@ -31,10 +31,27 @@ public class Unit : MonoBehaviour
         StartCoroutine("TargetAquisition",Random.Range(0.1f,0.8f));
         // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
         //GetComponent<ParticleSystem>().Emit(1); //Fire Main Cannon
+        unitManager = GameObject.FindGameObjectWithTag("UnitManager");
         if (isEnemy)
         {
-            this.transform.tag = "Enemy";
+            transform.tag = "Enemy";
+            gameObject.layer = 9;
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.tag != "GUINon")
+                {
+                    if (child.tag == "140mm" || child.tag == "400mm")
+                    {
+                        child.GetComponent<TurretScript>().isEnemy = true;
+                    }
+                }             
+            }
         }
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = 10;
+        }
+
     }
 
     IEnumerator TargetAquisition(float offset)
@@ -51,19 +68,27 @@ public class Unit : MonoBehaviour
                     if (Vector3.Distance(transform.position, enemies[x].transform.position) < Vector3.Distance(transform.position, target.transform.position))
                         target = enemies[x];
                 }
-                if (Vector3.Distance(transform.position, target.transform.position) < maxDistance)
+                foreach (Transform child in transform)
                 {
-                    hasTarget = true;
-                    for (int y = 0; y < turrets.Length; y++)
-                        turrets[y].SendMessage("SetTarget", target);
+                    if (Vector3.Distance(transform.position, target.transform.position) < 500 && child.tag == "140mm")//set vector3 distance as a local variable instead
+                    {
+                        //Debug.Log("Firing");
+                        hasTarget = true;
+                        for (int y = 0; y < turrets.Length; y++)
+                            turrets[y].SendMessage("SetTarget", target);
+                    }
+                    if (Vector3.Distance(transform.position, target.transform.position) < 1000 && child.tag == "400mm")
+                    {
+                        hasTarget = true;
+                        for (int y = 0; y < turrets.Length; y++)
+                            turrets[y].SendMessage("SetTarget", target);
+                    }
                 }
-
                 //}
                 if (hasTarget && target == null)
                 {
                     hasTarget = false;
                 }
-
             }
             yield return new WaitForSeconds(2.0f + offset);
             StartCoroutine("TargetAquisition", offset);
@@ -83,6 +108,10 @@ public class Unit : MonoBehaviour
         {
             if (hp < 1)
             {
+                if(selected)
+                {
+                    unitManager.GetComponent<UnitManager>().DeselectUnit(this.gameObject);
+                }
                 Instantiate(deathExplosionFX, transform.position, transform.rotation);
                 foreach (Transform child in transform)
                 {
@@ -150,7 +179,7 @@ public class Unit : MonoBehaviour
         {
             //Debug.Log("Hit");
             hp -= other.GetComponent<TurretScript>().damage;
-            Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
+            //Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
         }
     }
 

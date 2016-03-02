@@ -27,7 +27,7 @@ public class UnitManager : MonoBehaviour
         for (int x = 0; x < enemies.Length; x++)
             enemies[x].SendMessage("EnemyList", friends);
         //Debug.Log(targets.Length);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.0f);
         StartCoroutine("UnitList");
     }
 
@@ -35,14 +35,7 @@ public class UnitManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(1)) //Move click effect
             Instantiate(moveEffectObject, CameraOperator.GetDestination(), moveEffectObject.transform.rotation);
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        friends = GameObject.FindGameObjectsWithTag("Friend");
-        for (int x = 0; x < friends.Length; x++)
-            friends[x].SendMessage("EnemyList", enemies);
-        for (int x = 0; x < enemies.Length; x++)
-            enemies[x].SendMessage("EnemyList", friends);
         //Debug.Log(targets.Length);
-
     }
 
     public void DestOffset() //Formation movement
@@ -101,6 +94,11 @@ public class UnitManager : MonoBehaviour
     public void SelectAdditionalUnit(GameObject unit)
     {
         selectedUnits.Add(unit);
+    }
+
+    public void DeselectUnit(GameObject unit)
+    {
+        selectedUnits.Remove(unit);
     }
 
     public void DeselectAllUnits()

@@ -5,17 +5,18 @@ using System.IO;
 
 public class CoreScript : MonoBehaviour
 {
-    public string file;
     private string line;
     public List<float> parts = new List<float>();
     public List<GameObject> prefabs = new List<GameObject>();
 
     void Start()
     {
-        LoadShip(file);
+        Unit self = GetComponent<Unit>();
+        self.hp += 100;
+        //LoadShip("frigatetest");
     }
 
-    void LoadShip(string name)
+    void LoadShip(string file)
     {
         foreach (Transform child in transform)
             Destroy(child.gameObject);
@@ -38,7 +39,7 @@ public class CoreScript : MonoBehaviour
         }
     }
 
-    void SaveShip()
+    void SaveShip(string file)
     {
         foreach (Transform child in transform)
         {

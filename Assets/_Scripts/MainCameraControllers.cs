@@ -18,7 +18,7 @@ public class MainCameraControllers : MonoBehaviour
 
     void StartButton()
     {
-
+        Application.LoadLevel(2);
     }
     void OptionsButton()
     {
