@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TurretScript : MonoBehaviour
 {
+    public float angle = 10;
     public float rotSpeed = 360.0f;
     public GameObject bullet;
     public float fireRate;
@@ -19,14 +20,22 @@ public class TurretScript : MonoBehaviour
 
     void Start()
     {
+        //Debug.Log(LayerMask.GetMask("Allies"));
         nextFire = Time.time;
         flash = GetComponent<Light>();
         GetComponent<ParticleSystem>().startSize = bulletScale;
+        if(isEnemy)
+        {
+            ParticleSystem temp = GetComponent<ParticleSystem>();
+            ParticleSystem.CollisionModule temp2 = temp.collision;
+            temp2.collidesWith = 256;
+        }
         //GetComponent<ParticleSystem>().shape = inaccuracy;
     }
 
     void Update()
     {
+        //Debug.Log(Vector3.Angle(transform.forward, target.transform.position - transform.position));
         if(isAlive)
         {
             if (hasTarget && target != null)
@@ -35,16 +44,16 @@ public class TurretScript : MonoBehaviour
                 Quaternion rot = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPos), rotSpeed * Time.deltaTime);
                 transform.rotation = rot;
                 //transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z); //Lock turret to an axis, doesn't work yet.
-                if (Time.time > nextFire)
+                if (Time.time > nextFire && (Vector3.Angle(transform.forward, target.transform.position - transform.position) < angle))
                 {
                     //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
                     GetComponent<ParticleSystem>().Emit(1);
-                    flash.enabled = true;
+                    //flash.enabled = true;
                     nextFire = Time.time + fireRate; //Determines fire rate
                 }
                 else
                 {
-                    flash.enabled = false;
+                    //flash.enabled = false;
                 }
             }
             else
