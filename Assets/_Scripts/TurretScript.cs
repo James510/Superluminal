@@ -11,10 +11,11 @@ public class TurretScript : MonoBehaviour
     public int damage;
     public bool isEnemy = false;
     public float bulletScale=1.0f;
+    public int bulletBurst;
     private float nextFire;
     private bool hasTarget;
     private GameObject target;
-    private Light flash;
+    //private Light flash;
     private bool isAlive = true;
     private float randX, randY, randZ;
 
@@ -22,7 +23,7 @@ public class TurretScript : MonoBehaviour
     {
         //Debug.Log(LayerMask.GetMask("Allies"));
         nextFire = Time.time;
-        flash = GetComponent<Light>();
+        //flash = GetComponent<Light>();
         GetComponent<ParticleSystem>().startSize = bulletScale;
         if(isEnemy)
         {
@@ -47,7 +48,7 @@ public class TurretScript : MonoBehaviour
                 if (Time.time > nextFire && (Vector3.Angle(transform.forward, target.transform.position - transform.position) < angle))
                 {
                     //GameObject shot = Instantiate(bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler(transform.rotation.eulerAngles.x + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.y + Random.Range(-inaccuracy, inaccuracy), transform.rotation.eulerAngles.z + Random.Range(-inaccuracy, inaccuracy))) as GameObject;
-                    GetComponent<ParticleSystem>().Emit(1);
+                    GetComponent<ParticleSystem>().Emit(bulletBurst);
                     //flash.enabled = true;
                     nextFire = Time.time + fireRate; //Determines fire rate
                 }
