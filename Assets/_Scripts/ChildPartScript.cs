@@ -4,7 +4,7 @@ using System.Collections;
 public class ChildPartScript : MonoBehaviour
 {
     public int prefabNum;
-    public int speedMod;
+    public float speedMod;
     public int healthMod;
     void Start()
     {

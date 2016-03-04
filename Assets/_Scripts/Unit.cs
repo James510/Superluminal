@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class Unit : MonoBehaviour
 {
     public bool selected = false;
@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour
     public float rotSpeed;
     public bool hasMainCannon = false;
     public float maxDistance=1000;
-    public GameObject[] turrets;
+    public List<GameObject> turrets;
     public GameObject selectionCircle;
     public GameObject[] enemies;
     public GameObject unitManager;
@@ -28,10 +28,12 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
     void Start()
     {
+        unitManager = GameObject.FindGameObjectWithTag("UnitManager");
+        GameObject select = Instantiate(selectionCircle, transform.position, transform.rotation) as GameObject;
+        select.transform.parent = transform;
         StartCoroutine("TargetAquisition",Random.Range(0.1f,0.8f));
         // selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
         //GetComponent<ParticleSystem>().Emit(1); //Fire Main Cannon
-        unitManager = GameObject.FindGameObjectWithTag("UnitManager");
         if (isEnemy)
         {
             transform.tag = "Enemy";
@@ -47,9 +49,15 @@ public class Unit : MonoBehaviour
                 }             
             }
         }
+        int turretTemp = 0;
         foreach (Transform child in transform)
         {
             child.gameObject.layer = 10;
+            if (child.tag == "140mm" || child.tag == "400mm")
+            {
+                turrets.Add(child.gameObject);
+                turretTemp++;
+            }
         }
 
     }
@@ -74,13 +82,13 @@ public class Unit : MonoBehaviour
                     {
                         //Debug.Log("Firing");
                         hasTarget = true;
-                        for (int y = 0; y < turrets.Length; y++)
+                        for (int y = 0; y < turrets.Count; y++)
                             turrets[y].SendMessage("SetTarget", target);
                     }
                     if (Vector3.Distance(transform.position, target.transform.position) < 1000 && child.tag == "400mm")
                     {
                         hasTarget = true;
-                        for (int y = 0; y < turrets.Length; y++)
+                        for (int y = 0; y < turrets.Count; y++)
                             turrets[y].SendMessage("SetTarget", target);
                     }
                 }
@@ -179,7 +187,7 @@ public class Unit : MonoBehaviour
         {
             //Debug.Log("Hit");
             hp -= other.GetComponent<TurretScript>().damage;
-            //Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
+            Instantiate(explosionFX, new Vector3(transform.position.x + Random.Range(-4.0f, 4.0f), transform.position.y + Random.Range(-2.0f, 2.0f), transform.position.z + Random.Range(-4.0f, 4.0f)), transform.rotation);
         }
     }
 
@@ -199,7 +207,7 @@ public class Unit : MonoBehaviour
             float step = rotSpeed * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, toTarget, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
-            float dist = Vector3.Distance(moveToDest, transform.position);
+            //float dist = Vector3.Distance(moveToDest, transform.position);
             transform.Translate(Vector3.forward * speed);
             //transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z); // locks the z axis. will be changed in the future
             if (Vector3.Distance(transform.position, moveToDest) < stopDistanceOffset) //If in range, stop

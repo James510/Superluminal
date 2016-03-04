@@ -1,27 +1,15 @@
 fileFormatVersion: 2
-guid: b64f0c1fd331e114b85f5fd357e3e35f
-timeCreated: 1456872536
+guid: 6d44b711e25658f44aed1276598385e9
+timeCreated: 1456964171
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Capsule
-    100002: Merged_Meshes
-    100004: Merged_Meshes6
-    100006: //RootNode
-    400000: Capsule
-    400002: Merged_Meshes
-    400004: Merged_Meshes6
-    400006: //RootNode
-    2300000: Capsule
-    2300002: Merged_Meshes
-    2300004: Merged_Meshes6
-    3300000: Capsule
-    3300002: Merged_Meshes
-    3300004: Merged_Meshes6
-    4300000: Merged_Meshes
-    4300002: Merged_Meshes6
-    4300004: Capsule
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube
     7400000: Default Take
     9500000: //RootNode
   materials:
