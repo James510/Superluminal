@@ -17,7 +17,18 @@ public class Unit : MonoBehaviour
     public GameObject unitManager;
     public GameObject explosionFX;
     public GameObject deathExplosionFX;
+	public string nameMain;
     public bool isEnemy;
+	public int shipClass;
+
+	/*
+	 * 0 = Utility
+	 * 1 = Frigate
+	 * 2 = Cruiser/Battlecruiser
+	 * 3 = Battleship
+	 * 4 = Carrier
+	 */
+
     private Vector3 moveToDest = Vector3.zero;
     private bool selectedByClick=false;
     private bool selectedList = false;
@@ -28,6 +39,7 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
     void Start()
     {
+		
         unitManager = GameObject.FindGameObjectWithTag("UnitManager");
         GameObject select = Instantiate(selectionCircle, transform.position, transform.rotation) as GameObject;
         select.transform.parent = transform;
