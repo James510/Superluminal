@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 28704f49e9aa05743a184d551131190a
 timeCreated: 1457160565
+=======
+guid: 7666b3e65a73a41458cdc5af7b186a6f
+timeCreated: 1457131177
+>>>>>>> ModelStuff
 licenseType: Free
 ModelImporter:
   serializedVersion: 19

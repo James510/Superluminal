@@ -1,20 +1,69 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: b6bcfa44bbc13604f9c257240de9104f
-timeCreated: 1457160572
-=======
-guid: fe864a3168ea477459b535512b2136ec
-timeCreated: 1457131186
->>>>>>> ModelStuff
+guid: e08a801760cd33c4381e764a474e972d
+timeCreated: 1457141092
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cube
+    100004: Cube_001
+    100006: Cylinder
+    100008: Cylinder_001
+    100010: Cylinder_002
+    100012: Cylinder_003
+    100014: Cylinder_004
+    100016: Cylinder_005
+    100018: Cylinder_006
+    100020: Cylinder_007
+    100022: Cylinder_008
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cube
+    400002: Cube
+    400004: Cube_001
+    400006: Cylinder
+    400008: Cylinder_001
+    400010: Cylinder_002
+    400012: Cylinder_003
+    400014: Cylinder_004
+    400016: Cylinder_005
+    400018: Cylinder_006
+    400020: Cylinder_007
+    400022: Cylinder_008
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Cylinder
+    2300006: Cylinder_001
+    2300008: Cylinder_002
+    2300010: Cylinder_003
+    2300012: Cylinder_004
+    2300014: Cylinder_005
+    2300016: Cylinder_006
+    2300018: Cylinder_007
+    2300020: Cylinder_008
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Cylinder
+    3300006: Cylinder_001
+    3300008: Cylinder_002
+    3300010: Cylinder_003
+    3300012: Cylinder_004
+    3300014: Cylinder_005
+    3300016: Cylinder_006
+    3300018: Cylinder_007
+    3300020: Cylinder_008
+    4300000: Cylinder_002
+    4300002: Cylinder_001
+    4300004: Cube_001
+    4300006: Cube
+    4300008: Cylinder
+    4300010: Cylinder_003
+    4300012: Cylinder_004
+    4300014: Cylinder_005
+    4300016: Cylinder_006
+    4300018: Cylinder_007
+    4300020: Cylinder_008
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -73,7 +122,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

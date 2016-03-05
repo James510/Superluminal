@@ -1,11 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: b6bcfa44bbc13604f9c257240de9104f
-timeCreated: 1457160572
-=======
-guid: fe864a3168ea477459b535512b2136ec
-timeCreated: 1457131186
->>>>>>> ModelStuff
+guid: daf17cb54abf7e1478508aea8f5bd72b
+timeCreated: 1457213041
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -14,7 +9,9 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cube
+    4300000: Icosphere
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -73,7 +70,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

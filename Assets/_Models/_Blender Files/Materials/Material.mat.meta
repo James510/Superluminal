@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 58238febb7828c84789614889ae51caf
 timeCreated: 1457160563
+=======
+guid: 8556b241311254e4f8d99c24c682d911
+timeCreated: 1457131165
+>>>>>>> ModelStuff
 licenseType: Free
 NativeFormatImporter:
   userData: 
