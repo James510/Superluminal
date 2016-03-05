@@ -40,13 +40,10 @@ public class Unit : MonoBehaviour
             gameObject.layer = 9;
             foreach (Transform child in transform)
             {
-                if (child.gameObject.tag != "GUINon")
+                if (child.tag == "140mm" || child.tag == "400mm")
                 {
-                    if (child.tag == "140mm" || child.tag == "400mm")
-                    {
-                        child.GetComponent<TurretScript>().isEnemy = true;
-                    }
-                }             
+                    child.GetComponent<TurretScript>().isEnemy = true;
+                }
             }
         }
         int turretTemp = 0;

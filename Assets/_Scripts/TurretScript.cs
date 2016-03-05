@@ -25,13 +25,20 @@ public class TurretScript : MonoBehaviour
         nextFire = Time.time;
         //flash = GetComponent<Light>();
         GetComponent<ParticleSystem>().startSize = bulletScale;
-        if(isEnemy)
+        //GetComponent<ParticleSystem>().shape = inaccuracy;x
+        StartCoroutine("CheckDelay");
+    }
+
+    IEnumerator CheckDelay()
+    {
+        yield return new WaitForSeconds(1);
+        if (isEnemy)
         {
             ParticleSystem temp = GetComponent<ParticleSystem>();
             ParticleSystem.CollisionModule temp2 = temp.collision;
             temp2.collidesWith = 256;
         }
-        //GetComponent<ParticleSystem>().shape = inaccuracy;
+    
     }
 
     void Update()
