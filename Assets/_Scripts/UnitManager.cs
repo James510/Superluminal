@@ -6,6 +6,7 @@ using System.Linq;
 public class UnitManager : MonoBehaviour
 {
     public List<GameObject> selectedUnits;
+	public GameObject Canvas;
     public GameObject[] enemies;
     public GameObject[] friends;
     //public List<List<GameObject>> unitList;
@@ -26,6 +27,7 @@ public class UnitManager : MonoBehaviour
             friends[x].SendMessage("EnemyList", enemies);
         for (int x = 0; x < enemies.Length; x++)
             enemies[x].SendMessage("EnemyList", friends);
+		Canvas.SendMessage ("ReceiveList", friends);
         //Debug.Log(targets.Length);
         yield return new WaitForSeconds(0.0f);
         StartCoroutine("UnitList");
