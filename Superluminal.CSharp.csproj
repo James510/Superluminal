@@ -80,14 +80,18 @@
     <Compile Include="Assets\_Scripts\ExplodeTrailFX.cs" />
     <Compile Include="Assets\_Scripts\ExplosionFXScript.cs" />
     <Compile Include="Assets\_Scripts\GameManager.cs" />
+    <Compile Include="Assets\_Scripts\LoadPrefabButton.cs" />
+    <Compile Include="Assets\_Scripts\LoadShipButtons.cs" />
     <Compile Include="Assets\_Scripts\MainCameraControllers.cs" />
     <Compile Include="Assets\_Scripts\MainCameraMover.cs" />
     <Compile Include="Assets\_Scripts\MainCameraZoom.cs" />
     <Compile Include="Assets\_Scripts\PlanetScript.cs" />
     <Compile Include="Assets\_Scripts\RotationLock.cs" />
+    <Compile Include="Assets\_Scripts\ShipBuilderCoreScript.cs" />
     <Compile Include="Assets\_Scripts\ShockwaveFX.cs" />
     <Compile Include="Assets\_Scripts\SplashScreens.cs" />
     <Compile Include="Assets\_Scripts\TurretScript.cs" />
+    <Compile Include="Assets\_Scripts\UI.cs" />
     <Compile Include="Assets\_Scripts\Unit.cs" />
     <Compile Include="Assets\_Scripts\UnitManager.cs" />
   </ItemGroup>

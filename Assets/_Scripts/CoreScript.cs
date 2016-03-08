@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.IO;
 public class CoreScript : MonoBehaviour
 {
     private string line;
+    public Text shipName;   
     public List<float> parts = new List<float>();
     public List<GameObject> prefabs = new List<GameObject>();
 
@@ -21,7 +23,7 @@ public class CoreScript : MonoBehaviour
         foreach (Transform child in transform)
             Destroy(child.gameObject);
         ClearList();
-        StreamReader s = File.OpenText(file + ".shp");
+        StreamReader s = File.OpenText("C:\\Users\\James510\\Desktop\\Auragon\\Superluminal\\Ships\\"+file);
         line = s.ReadLine();
         while (line != null)
         {
@@ -35,7 +37,8 @@ public class CoreScript : MonoBehaviour
 
         for (int i = 0; i < parts.Count; i+=4)
         {
-            Instantiate(prefabs[(int)parts[i]], new Vector3(transform.position.x+parts[i + 1], transform.position.y + parts[i + 2], transform.position.z + parts[i + 3]), transform.rotation);
+            GameObject clone = Instantiate(prefabs[(int)parts[i]], new Vector3(transform.position.x+parts[i + 1], transform.position.y + parts[i + 2], transform.position.z + parts[i + 3]), transform.rotation) as GameObject;
+            clone.transform.SetParent(transform);
         }
     }
 
@@ -43,13 +46,16 @@ public class CoreScript : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            parts.Add(child.GetComponent<ChildPartScript>().prefabNum);
-            parts.Add(child.transform.localPosition.x);
-            parts.Add(child.transform.localPosition.y);
-            parts.Add(child.transform.localPosition.z);
+            if(child.tag!="GUINon")
+            {
+                parts.Add(child.GetComponent<ChildPartScript>().prefabNum);
+                parts.Add(child.transform.localPosition.x);
+                parts.Add(child.transform.localPosition.y);
+                parts.Add(child.transform.localPosition.z);
+            }
         }
 
-        StreamWriter w = File.CreateText(file + ".shp");
+        StreamWriter w = File.CreateText("C:\\Users\\James510\\Desktop\\Auragon\\Superluminal\\Ships\\" + file + ".shp");
         for (int i = 0; i < parts.Count; i++)
             w.WriteLine(parts[i]);
         w.Close();

@@ -35,11 +35,12 @@ public class Unit : MonoBehaviour
     private bool hasTarget = false;
     private bool isAlive = true;
     private GameObject target;
+    private Color originalColor;
 	
 	// Update is called once per frame
     void Start()
     {
-		
+        originalColor = GetComponent<Renderer>().material.color;
         unitManager = GameObject.FindGameObjectWithTag("UnitManager");
         GameObject select = Instantiate(selectionCircle, transform.position, transform.rotation) as GameObject;
         select.transform.parent = transform;
@@ -155,7 +156,8 @@ public class Unit : MonoBehaviour
                     GetComponent<Renderer>().material.color = Color.red;
                     if (selectedList == false)
                     {
-                        unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
+                        if (PlayerPrefs.GetInt("EditorMode") == 0)
+                            unitManager.GetComponent<UnitManager>().SelectAdditionalUnit(this.gameObject);
                         selectionCircle.GetComponent<SpriteRenderer>().enabled = true;
                         selectedList = true;
                     }
@@ -165,16 +167,18 @@ public class Unit : MonoBehaviour
                 {
                     if (selectedList == true)//Deselect units
                     {
-                        unitManager.GetComponent<UnitManager>().DeselectAllUnits();
+                        if (PlayerPrefs.GetInt("EditorMode") == 0)
+                            unitManager.GetComponent<UnitManager>().DeselectAllUnits();
                         selectionCircle.GetComponent<SpriteRenderer>().enabled = false;
                         selectedList = false;
                     }
-                    GetComponent<Renderer>().material.color = Color.white;
+                    GetComponent<Renderer>().material.color = originalColor;
                 }
             }
             if (selected && Input.GetMouseButtonUp(1))//Move script
             {
-                unitManager.GetComponent<UnitManager>().DestOffset();
+                if (PlayerPrefs.GetInt("EditorMode") == 0)
+                    unitManager.GetComponent<UnitManager>().DestOffset();
                 //Vector3 destination = CameraOperator.GetDestination();
 
                 /*if(destination != Vector3.zero)
