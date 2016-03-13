@@ -11,6 +11,8 @@ public class MainCameraZoom : MonoBehaviour
     public float rotateSpeed = 10;
     private Vector3 initialPosition;
     private Vector3 initialRotation;
+    private float x = 0;
+    private float y = 0;
 
     void Start()
     {
@@ -35,9 +37,21 @@ public class MainCameraZoom : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, transform.position.y - (transform.position.y - (initialPosition.y + CurrentZoom)) * 0.1f, transform.position.z);
 
-        float x = transform.eulerAngles.x - (transform.eulerAngles.x - (initialRotation.x + CurrentZoom * ZoomRotation)) * 0.1f;
-        x = Mathf.Clamp(x, zoomAngleRange.x, zoomAngleRange.y);
+        //float x = transform.eulerAngles.x - (transform.eulerAngles.x - (initialRotation.x + CurrentZoom * ZoomRotation)) * 0.1f;
+        //x = Mathf.Clamp(x, zoomAngleRange.x, zoomAngleRange.y);
 
-        transform.eulerAngles = new Vector3(x, transform.eulerAngles.y, transform.eulerAngles.z);
+        //transform.eulerAngles = new Vector3(x, transform.eulerAngles.y, transform.eulerAngles.z);
+
+        /*if (Input.GetMouseButton(2) && Input.mousePosition.x >= Screen.width * (-1))
+        {
+            transform.eulerAngles = new Vector3(Input.mousePosition.x, transform.eulerAngles.y, transform.eulerAngles.z);
+        }*/
+        if (Input.GetMouseButton(2))
+        {
+            x += Input.GetAxis("Mouse X") * 5;
+            y -= Input.GetAxis("Mouse Y") * 5;
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            transform.rotation = rotation;
+        }
     }
 }

@@ -14,6 +14,8 @@ public class UnitManager : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.SetInt("EditorMode", 0);
+
         //May have to initialize list
         StartCoroutine("UnitList");
         selectedUnits.Clear();

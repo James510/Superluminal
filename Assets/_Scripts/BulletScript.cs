@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//OBSELETE
 public class BulletScript : MonoBehaviour
 {
     public bool isEnemy = false;
