@@ -8,10 +8,14 @@ public class CoreScript : MonoBehaviour
 {
     private string line;
 <<<<<<< HEAD
+<<<<<<< HEAD
     public Text shipName;
 =======
     public Text shipName;   
 >>>>>>> origin/master
+=======
+    public Text shipName;   
+>>>>>>> refs/remotes/origin/master
     public List<float> parts = new List<float>();
     public List<GameObject> prefabs = new List<GameObject>();
 
@@ -72,7 +76,10 @@ public class CoreScript : MonoBehaviour
 =======
 
         StreamWriter w = File.CreateText("C:\\Users\\James510\\Desktop\\Auragon\\Superluminal\\Ships\\" + file + ".shp");
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+>>>>>>> refs/remotes/origin/master
         for (int i = 0; i < parts.Count; i++)
             w.WriteLine(parts[i]);
         w.Close();

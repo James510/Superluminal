@@ -8,6 +8,7 @@ public class ChildPartScript : MonoBehaviour
     public float speedMod;
     public int healthMod;
 <<<<<<< HEAD
+<<<<<<< HEAD
     public bool isMoving;
     private bool selectedByClick = false;
     private bool selectedList = false;
@@ -19,10 +20,16 @@ public class ChildPartScript : MonoBehaviour
     private bool selectedList = false;
     private Color originalColor;
 >>>>>>> origin/master
+=======
+    private bool selectedByClick = false;
+    private bool selectedList = false;
+    private Color originalColor;
+>>>>>>> refs/remotes/origin/master
 
     void Start()
     {
         originalColor = GetComponent<Renderer>().material.color;
+<<<<<<< HEAD
 <<<<<<< HEAD
         GetComponentInParent<Unit>().hp += healthMod;
         GetComponentInParent<Unit>().speed += speedMod;
@@ -131,11 +138,14 @@ public class ChildPartScript : MonoBehaviour
 
     void OnDestroy()
 =======
+=======
+>>>>>>> refs/remotes/origin/master
         if (PlayerPrefs.GetInt("EditorMode") == 0)
         {
             GetComponentInParent<Unit>().hp += healthMod;
             GetComponentInParent<Unit>().speed += speedMod;
         }
+<<<<<<< HEAD
     }
     void Update()
 >>>>>>> origin/master
@@ -206,6 +216,40 @@ public class ChildPartScript : MonoBehaviour
                 }
             }
         }
+=======
+>>>>>>> refs/remotes/origin/master
+    }
+    void Update()
+    {
+        if(PlayerPrefs.GetInt("EditorMode")==0)
+        {
+            if (GetComponent<Renderer>().isVisible && Input.GetMouseButton(0)) //Detect if unit is in view and select by dragging
+            {
+                if (!selectedByClick)
+                {
+                    Vector3 camPos = Camera.main.WorldToScreenPoint(transform.position);
+                    camPos.y = CameraOperator.InvertMouseY(camPos.y);
+                    selected = CameraOperator.selection.Contains(camPos);
+                }
+                if (selected)
+                {
+                    GetComponent<Renderer>().material.color = Color.red;
+                    if (selectedList == false)
+                    {
+                        selectedList = true;
+                    }
+
+                }
+                else
+                {
+                    if (selectedList == true)//Deselect units
+                    {
+                        selectedList = false;
+                    }
+                    GetComponent<Renderer>().material.color = originalColor;
+                }
+            }
+        }
     }
     void OnDestroy()
     {
@@ -214,6 +258,26 @@ public class ChildPartScript : MonoBehaviour
             GetComponentInParent<Unit>().hp -= healthMod;
             GetComponentInParent<Unit>().speed -= speedMod;
 >>>>>>> origin/master
+        }
+    }
+    void OnMouseDown() //Click selection
+    {
+        if (PlayerPrefs.GetInt("EditorMode") == 1)
+        {
+            selectedByClick = true;
+            selected = true;
+        }
+        //unitManager.GetComponent<UnitManager>().SelectSingleUnit(this.gameObject);
+
+    }
+
+    void OnMouseUp()
+    {
+        if (PlayerPrefs.GetInt("EditorMode") == 1)
+        {
+            if (selectedByClick)
+                selected = true;
+            selectedByClick = false;
         }
     }
     void OnMouseDown() //Click selection

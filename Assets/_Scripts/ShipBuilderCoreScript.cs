@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,20 +8,29 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 >>>>>>> origin/master
+=======
+using System.Collections;
+using UnityEngine.UI;
+>>>>>>> refs/remotes/origin/master
 using System.IO;
 
 public class ShipBuilderCoreScript : MonoBehaviour
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     public List<GameObject> prefabList = new List<GameObject>();
 =======
     public GameObject[] prefabList;
 >>>>>>> origin/master
+=======
+    public GameObject[] prefabList;
+>>>>>>> refs/remotes/origin/master
     public Button prefabButtonTemp;
     public Button loadShipButtonTemp;
     public GameObject loadMenuContent;
     public GameObject loadMenu;
     public GameObject core;
+<<<<<<< HEAD
 <<<<<<< HEAD
     public GameObject prefabMenuContent;
     public Text shipName;
@@ -45,6 +55,8 @@ public class ShipBuilderCoreScript : MonoBehaviour
         z.transform.SetParent(other.transform);
     }
 =======
+=======
+>>>>>>> refs/remotes/origin/master
     public Text shipName;
 
     // Use this for initialization
@@ -59,7 +71,10 @@ public class ShipBuilderCoreScript : MonoBehaviour
     {
 	
 	}
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+>>>>>>> refs/remotes/origin/master
 
     void LoadShipMenu()
     {
@@ -96,15 +111,20 @@ public class ShipBuilderCoreScript : MonoBehaviour
         string file = shipName.text.ToString();
         if (file == "")
 <<<<<<< HEAD
+<<<<<<< HEAD
             file = "Untitled Ship.shp";
 =======
             file = "Untitled Ship";
 >>>>>>> origin/master
+=======
+            file = "Untitled Ship";
+>>>>>>> refs/remotes/origin/master
         core.SendMessage("SaveShip", file);
     }
 
     void LoadPrefab(int prefab)
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         GameObject clone = Instantiate(prefabList[prefab], new Vector3(0.0f,0.0f,0.0f),transform.rotation) as GameObject;
         clone.GetComponent<ChildPartScript>().isMoving = true;
@@ -116,10 +136,15 @@ public class ShipBuilderCoreScript : MonoBehaviour
         GameObject clone = Instantiate(prefabList[prefab], new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z),transform.rotation) as GameObject;
 
 >>>>>>> origin/master
+=======
+        GameObject clone = Instantiate(prefabList[prefab], new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z),transform.rotation) as GameObject;
+
+>>>>>>> refs/remotes/origin/master
     }
 
     void LoadButtons()
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         int xOffset = -120;
         int yOffset = 0;
@@ -142,5 +167,8 @@ public class ShipBuilderCoreScript : MonoBehaviour
 =======
 
 >>>>>>> origin/master
+=======
+
+>>>>>>> refs/remotes/origin/master
     }
 }
