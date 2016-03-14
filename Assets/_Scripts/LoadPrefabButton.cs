@@ -8,7 +8,14 @@ public class LoadPrefabButton : MonoBehaviour
     private GameObject shipBuilderCore;
     private Button loadButton;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     // Use this for initialization
+>>>>>>> origin/master
+=======
+    // Use this for initialization
+>>>>>>> refs/remotes/origin/master
     void Start()
     {
         shipBuilderCore = GameObject.Find("ShipBuilderCore");
@@ -16,12 +23,21 @@ public class LoadPrefabButton : MonoBehaviour
         shipText.text = this.name;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/remotes/origin/master
     // Update is called once per frame
     void Update()
     {
 
     }
 
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+>>>>>>> refs/remotes/origin/master
     void Awake()
     {
         loadButton = GetComponent<Button>();

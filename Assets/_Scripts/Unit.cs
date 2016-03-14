@@ -9,7 +9,6 @@ public class Unit : MonoBehaviour
     public float speed = 5.0f;
     public float stopDistanceOffset = 1;
     public float rotSpeed;
-    public bool hasMainCannon = false;
     public float maxDistance=1000;
     public List<GameObject> turrets;
     public GameObject selectionCircle;
@@ -125,6 +124,8 @@ public class Unit : MonoBehaviour
 
 	void Update ()
     {
+        if (speed < 0)
+            speed = 0;
         if(isAlive)
         {
             if (hp < 1)
